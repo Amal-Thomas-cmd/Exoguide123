@@ -3,100 +3,61 @@ const messageInput = document.getElementById("messageInput");
 const sendButton = document.getElementById("sendButton");
 const randomBtn = document.getElementById("randomBtn");
 
-// Preloaded Q&A
-const qaPairs = [
-  { q: "kepler koi", a: "Kepler Objects of Interest (KOI) lists all confirmed exoplanets and candidates observed by Kepler." },
-  { q: "kepler classification", a: "Kepler classifies exoplanets, planetary candidates, and false positives using light curve data." },
-  { q: "tess toi", a: "TESS Objects of Interest (TOI) lists exoplanets, candidates, false positives, and known planets discovered by TESS." },
-  { q: "tfowpg disposition", a: "The 'TFOWPG Disposition' column in TESS indicates classification like PC, FP, APC, or KP." },
-  { q: "k2 dataset", a: "K2 Planets and Candidates dataset contains exoplanets observed during K2 mission campaigns." },
-  { q: "machine learning", a: "Machine learning can classify exoplanet candidates, distinguish false positives, and predict properties." },
-  { q: "neossat", a: "NEOSSat is Canada's space telescope observing asteroids, space debris, and exoplanets." },
-  { q: "jwst", a: "James Webb Space Telescope (JWST) is an infrared telescope studying exoplanets, galaxies, and the early universe." },
-  // Add more questions here...
+const randomQuestions = [
+  "What is an exoplanet?",
+  "How are exoplanets discovered?",
+  "What is the habitable zone?",
+  "Which exoplanet is most like Earth?",
+  "What is the Kepler mission?"
 ];
 
-// Scroll helper
-function scrollToBottom() {
+sendButton.addEventListener("click", sendMessage);
+messageInput.addEventListener("keypress", (e) => {
+  if (e.key === "Enter") sendMessage();
+});
+
+randomBtn.addEventListener("click", () => {
+  const question = randomQuestions[Math.floor(Math.random() * randomQuestions.length)];
+  messageInput.value = question;
+  sendMessage();
+});
+
+function sendMessage() {
+  const message = messageInput.value.trim();
+  if (!message) return;
+  appendMessage(message, "user");
+  messageInput.value = "";
+
+  setTimeout(() => {
+    generateBotReply(message);
+  }, 800);
+}
+
+function appendMessage(text, sender) {
+  const messageDiv = document.createElement("div");
+  messageDiv.classList.add("message", sender);
+  messageDiv.textContent = text;
+  chatBox.appendChild(messageDiv);
   chatBox.scrollTop = chatBox.scrollHeight;
 }
 
-// Add message
-function addMessage(content, sender = "user") {
-  const msgDiv = document.createElement("div");
-  msgDiv.classList.add("message", sender);
-  msgDiv.innerHTML = content;
-  chatBox.appendChild(msgDiv);
-  scrollToBottom();
+function generateBotReply(message) {
+  let reply;
+  message = message.toLowerCase();
+
+  if (message.includes("exoplanet")) {
+    reply = "An exoplanet is a planet that orbits a star outside our solar system. 🌍✨";
+  } else if (message.includes("discover")) {
+    reply = "Scientists detect exoplanets using methods like the transit method and radial velocity. 🔭";
+  } else if (message.includes("habitable")) {
+    reply = "The habitable zone is the area around a star where conditions might allow liquid water to exist. 💧";
+  } else if (message.includes("earth")) {
+    reply = "Kepler-452b is often called Earth’s cousin because it’s similar in size and orbit. 🌎";
+  } else if (message.includes("kepler")) {
+    reply = "NASA’s Kepler mission was designed to find Earth-like planets around other stars. 🚀";
+  } else {
+    reply = "That’s an interesting question! Exoplanets are full of mysteries — let’s explore more! 🌌";
+  }
+
+  appendMessage(reply, "bot");
 }
-
-// Bot response
-function getBotResponse(userText) {
-  const text = userText.toLowerCase();
-
-  // Greetings
-  const greetings = ["hi","hello","hey","good morning","good afternoon","good evening","what's up","yo"];
-  const greetResponses = [
-    "Hello there! 👋 I’m ExoGuide. Ask me anything about exoplanets 🌌",
-    "Hey! 🌟 Ready to explore some exoplanets?",
-    "Hi! 🚀 I’m here to answer your questions about the cosmos!",
-    "Hello! 🌌 Curious about planets outside our solar system?"
-  ];
-  if (greetings.some(g => text.includes(g))) {
-    return greetResponses[Math.floor(Math.random() * greetResponses.length)];
-  }
-
-  // Keyword-based Q&A
-  for (let pair of qaPairs) {
-    const keywords = pair.q.toLowerCase().split(" ");
-    if (keywords.some(k => text.includes(k))) return pair.a;
-  }
-
-  return "Sorry, I don't have an answer to that yet. Try asking about Kepler, TESS, K2, NEOSSat, or JWST!";
-}
-
-// Send message
-sendButton.addEventListener("click", () => {
-  const userText = messageInput.value.trim();
-  if (!userText) return;
-  addMessage(userText, "user");
-  messageInput.value = "";
-
-  const botMsg = document.createElement("div");
-  botMsg.classList.add("message", "bot");
-  botMsg.innerHTML = "ExoGuide is typing...";
-  chatBox.appendChild(botMsg);
-  scrollToBottom();
-
-  setTimeout(() => {
-    botMsg.innerHTML = getBotResponse(userText);
-    scrollToBottom();
-  }, 800);
-});
-
-// Enter key send
-messageInput.addEventListener("keypress", (e) => {
-  if (e.key === "Enter") {
-    e.preventDefault();
-    sendButton.click();
-  }
-});
-
-// Random question
-randomBtn.addEventListener("click", () => {
-  if (qaPairs.length === 0) return;
-  const randomIndex = Math.floor(Math.random() * qaPairs.length);
-  const randomQuestion = qaPairs[randomIndex].q;
-  addMessage(randomQuestion, "user");
-
-  const botMsg = document.createElement("div");
-  botMsg.classList.add("message", "bot");
-  botMsg.innerHTML = "ExoGuide is typing...";
-  chatBox.appendChild(botMsg);
-  scrollToBottom();
-
-  setTimeout(() => {
-    botMsg.innerHTML = getBotResponse(randomQuestion);
-    scrollToBottom();
-  }, 800);
-});
