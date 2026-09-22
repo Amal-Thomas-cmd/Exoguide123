@@ -6,10 +6,14 @@
 * *Note: Built entirely as a solo developer, demonstrating end-to-end technical execution and self-reliance.*
 
 ## 🌌 Project Overview
-ExoGuide is an interactive AI-powered web platform designed to translate complex astronomical data into an engaging educational experience. Inspired by NASA’s mission to search for worlds beyond our solar system, ExoGuide serves as a digital companion that educates users about exoplanet classification, detection methods, and upcoming space missions.
+ExoGuide is an interactive AI-powered web platform designed to translate complex astronomical data into an engaging educational experience. Inspired by NASA’s mission to search for worlds beyond our solar system, ExoGuide serves as a digital companion that educates users about exoplanet classification, detection methods, and upcoming space missions. 
+
+## 🎮 Immersive Simulation & Gamification
+* **Minecraft Data Server:** Programmed a dedicated Minecraft server acting as a structural 3D data pipeline to map out planet scales, planetary gravity profiles, and environment types. 
+* **Video Walkthrough:** A comprehensive server video walkthrough demonstrating user movement in future idea option in the website , interactive chat zones, and the backend structures is hosted right inside this repository.
 
 ## 🛠️ Tech Stack & Data Sources
-* **Frontend:** HTML5, CSS3 (Custom Animations), JavaScript (ES6+)
+* **Frontend & Architecture:** HTML5, CSS3, JavaScript (ES6+), and custom server mechanics.
 * **AI Tools:** Integrated ChatGPT API models for dynamic, context-aware science communication.
 * **NASA Data Sources Utilized:**
   * Kepler Objects of Interest (KOI)
@@ -17,10 +21,3 @@ ExoGuide is an interactive AI-powered web platform designed to translate complex
   * K2 Planets and Candidates
   * James Webb Space Telescope (JWST) data structures
   * Canadian Space Agency (CSA) / NEOSSAT tracking parameters
-
-## 🚀 Core Features
-1. **ExoGuide AI Bot:** A custom chatbot allowing users to ask complex questions or use a random selector to discover new cosmic ideas.
-2. **Virtual Tourism:** Rich visual representations and scientific hypotheses detailing the characteristics and habitability of distant planets.
-3. **Interactive Gamification:** Engaging quizzes and simulators built on real mission data to let users experience the exoplanet discovery process.
-
-
